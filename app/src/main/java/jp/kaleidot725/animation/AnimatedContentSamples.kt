@@ -30,11 +30,14 @@ fun AnimatedContentCounterDefault() {
             )
         }
 
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { count++ }
-        ) {
-            Text("Add")
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(onClick = { count++ }) {
+                Text("PLUS")
+            }
+
+            Button(onClick = { count-- }) {
+                Text("MINUS")
+            }
         }
     }
 }
@@ -48,12 +51,13 @@ fun AnimatedContentCounterCustom() {
         AnimatedContent(
             targetState = count,
             transitionSpec = {
-                if (targetState > initialState) {
-                    slideInVertically({ height -> height }) + fadeIn() with
-                            slideOutVertically({ height -> -height }) + fadeOut()
+                // <EnterTransition> with <ExitTransition> という形式でアニメーションを定義する
+                // 数がプラスされたか、マイナスされたかで移動する方向を変えたいので if で分岐している
+                val isAdd = targetState > initialState
+                if (isAdd) {
+                    slideInHorizontally({ width -> width }) + fadeIn() with slideOutHorizontally({ width -> -width }) + fadeOut()
                 } else {
-                    slideInVertically({ height -> -height }) + fadeIn() with
-                            slideOutVertically({ height -> height }) + fadeOut()
+                    slideInHorizontally({ width -> -width }) + fadeIn() with slideOutHorizontally({ width -> width }) + fadeOut()
                 }.using(
                     SizeTransform(clip = false)
                 )
@@ -76,6 +80,5 @@ fun AnimatedContentCounterCustom() {
                 Text("MINUS")
             }
         }
-
     }
 }

@@ -18,27 +18,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    AnimatedContentCounterCustom()
+                    LazyColumn {
+                        item {
+                            AnimatedVisibilitySample()
+                        }
 
-//                    LazyColumn {
-//                        item {
-//                            AnimatedVisibilitySample()
-//                        }
-//
-//                        item {
-//                            AnimatedVisibilityStateSample()
-//                        }
-//
-//                        item {
-//                            AnimatedVisibilityEnterExitSample()
-//                        }
-//                        item {
-//                            AnimatedContentCounterDefault()
-//                        }
-//                        item {
-//                            AnimatedContentCounterCustom()
-//                        }
-//                    }
+                        item {
+                            AnimatedVisibilityStateSample()
+                        }
+
+                        item {
+                            AnimatedVisibilityEnterExitSample()
+                        }
+
+                        item {
+                            AnimatedContentCounterDefault()
+                        }
+
+                        item {
+                            AnimatedContentCounterCustom()
+                        }
+                    }
                 }
             }
         }
