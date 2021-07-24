@@ -1,16 +1,14 @@
 package jp.kaleidot725.animation
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.animation.core.keyframes
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 
 @ExperimentalAnimationApi
 @Composable
@@ -78,6 +76,55 @@ fun AnimatedContentCounterCustom() {
 
             Button(onClick = { count-- }) {
                 Text("MINUS")
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Composable
+fun AnimatedContentExpandableTextSample() {
+    var expanded by remember { mutableStateOf(false) }
+
+    Surface(
+        color = MaterialTheme.colors.primary,
+        onClick = { expanded = !expanded },
+        modifier = Modifier.padding(8.dp)
+    ) {
+        AnimatedContent(
+            targetState = expanded,
+            transitionSpec = {
+                fadeIn() with fadeOut() using SizeTransform { initialSize, targetSize ->
+                    if (expanded) {
+                        // どのサイズから開始するか決められるようになっているらしい
+                        // at はどの秒数からこのアニメーションを開始するかを設定できる
+                        // 今回は全体アニメーション時間を 500ms で at を 250 ms から開始するようにしてみる
+                        keyframes {
+                            IntSize(initialSize.width, initialSize.height) at 250
+                            durationMillis = 500
+                        }
+                    } else {
+                        keyframes {
+                            IntSize(initialSize.width, initialSize.height) at 250
+                            durationMillis = 500
+                        }
+                    }
+                }
+            }
+        ) { targetExpanded ->
+            if (targetExpanded) {
+                Text(
+                    text = "Expanded",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                )
+            } else {
+                Text(
+                    text = "Not Expanded",
+                    modifier = Modifier.wrapContentSize()
+                )
             }
         }
     }
