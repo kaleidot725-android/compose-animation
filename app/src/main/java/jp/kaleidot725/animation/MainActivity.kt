@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import jp.kaleidot725.animation.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalMaterialApi
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +51,11 @@ class MainActivity : ComponentActivity() {
                         }
 
                         item {
-                            Spacer(modifier = Modifier
-                                .fillMaxWidth()
-                                .height(100.dp))
+                            Spacer(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
+                            )
                         }
                     }
                 }

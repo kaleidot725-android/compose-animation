@@ -51,14 +51,12 @@ fun AnimatedContentCounterCustom() {
             transitionSpec = {
                 // <EnterTransition> with <ExitTransition> という形式でアニメーションを定義する
                 // 数がプラスされたか、マイナスされたかで移動する方向を変えたいので if で分岐している
-                val isAdd = targetState > initialState
-                if (isAdd) {
+                val isPlus = targetState > initialState
+                if (isPlus) {
                     slideInHorizontally({ width -> width }) + fadeIn() with slideOutHorizontally({ width -> -width }) + fadeOut()
                 } else {
                     slideInHorizontally({ width -> -width }) + fadeIn() with slideOutHorizontally({ width -> width }) + fadeOut()
-                }.using(
-                    SizeTransform(clip = false)
-                )
+                }
             }
         ) { targetCount ->
             Text(
@@ -96,19 +94,9 @@ fun AnimatedContentExpandableTextSample() {
             targetState = expanded,
             transitionSpec = {
                 fadeIn() with fadeOut() using SizeTransform { initialSize, targetSize ->
-                    if (expanded) {
-                        // どのサイズから開始するか決められるようになっているらしい
-                        // at はどの秒数からこのアニメーションを開始するかを設定できる
-                        // 今回は全体アニメーション時間を 500ms で at を 250 ms から開始するようにしてみる
-                        keyframes {
-                            IntSize(initialSize.width, initialSize.height) at 250
-                            durationMillis = 500
-                        }
-                    } else {
-                        keyframes {
-                            IntSize(initialSize.width, initialSize.height) at 250
-                            durationMillis = 500
-                        }
+                    keyframes {
+                        IntSize(initialSize.width, initialSize.height) at 250
+                        durationMillis = 500
                     }
                 }
             }
